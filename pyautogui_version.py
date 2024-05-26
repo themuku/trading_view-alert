@@ -1,3 +1,4 @@
+import datetime
 import os
 import pyautogui
 import time
@@ -7,6 +8,8 @@ from PIL import Image
 from dotenv import load_dotenv
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
+from tkinter import messagebox
+from datetime import datetime
 
 
 load_dotenv()
@@ -49,12 +52,13 @@ try:
 
         try:
             signal_location = pyautogui.locate(image_path, screenshot, confidence=0.8)
-            print(signal_location)
+            indicator_appeared = datetime.now()
         except pyautogui.ImageNotFoundException:
             signal_location = None
 
         if signal_location:
             send_email_alert()
+            messagebox.showinfo("Indicator appeared", f"The indicator have just appeared in the chart at {indicator_appeared}")
 
         time.sleep(60)
 except KeyboardInterrupt:
